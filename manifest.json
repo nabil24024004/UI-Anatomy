@@ -1,0 +1,85 @@
+{
+    "project_name": "UI Anatomy",
+    "version": "1.0.0",
+    "description": "A curated UX research library analyzing real-world product interfaces",
+    "pages": [
+        "/",
+        "/case-studies",
+        "/case-studies/[slug]",
+        "/tags/[tag]",
+        "/about",
+        "/subscribe"
+    ],
+    "components": [
+        "Navbar",
+        "Footer",
+        "HeroFeaturedCase",
+        "CaseStudyCard",
+        "CaseStudyGrid",
+        "TagFilter",
+        "SearchBar",
+        "NewsletterCTA"
+    ],
+    "api_endpoints": [
+        {
+            "path": "/api/case-studies",
+            "method": "GET",
+            "description": "List case studies with optional search and tag filters"
+        },
+        {
+            "path": "/api/case-studies/:slug",
+            "method": "GET",
+            "description": "Get single case study by slug"
+        },
+        {
+            "path": "/api/tags",
+            "method": "GET",
+            "description": "List all available tags"
+        },
+        {
+            "path": "/api/subscribe",
+            "method": "POST",
+            "description": "Newsletter email subscription"
+        }
+    ],
+    "data_models": [
+        {
+            "name": "CaseStudy",
+            "fields": {
+                "id": "string",
+                "title": "string",
+                "slug": "string",
+                "company": "string",
+                "summary": "string",
+                "content": "string (markdown)",
+                "tags": "string[]",
+                "cover_image": "string (url)",
+                "published_at": "string (ISO timestamp)"
+            }
+        }
+    ],
+    "style_tokens": {
+        "background": "#0F1113",
+        "text": "#D6D6D6",
+        "text_primary": "#FFFFFF",
+        "accent": "#21D4FD",
+        "accent_orange": "#F46D33",
+        "surface": "#181A1D"
+    },
+    "fonts": [
+        "Inter",
+        "Manrope"
+    ],
+    "stack": {
+        "frontend": "Next.js 15 + React 19 + TailwindCSS 4",
+        "backend": "Next.js API Routes (Supabase ready)",
+        "database": "Mock data (Supabase ready)"
+    },
+    "deliverables": {
+        "repo": true,
+        "tests": false,
+        "manifest": true,
+        "docker": true,
+        "readme": true
+    }
+}
