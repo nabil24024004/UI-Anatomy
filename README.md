@@ -82,6 +82,25 @@ npm run build
 npm start
 ```
 
+### Deploy to Vercel
+
+1. **Import Project**
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New Project"
+   - Import from GitHub: `nabil24024004/UI-Anatomy`
+
+2. **Configure Environment Variables**
+   Add these in Vercel dashboard → Settings → Environment Variables:
+   
+   | Variable | Value |
+   |----------|-------|
+   | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase URL |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon key |
+
+3. **Deploy**
+   - Click "Deploy"
+   - Vercel auto-detects Next.js and builds
+
 ## Project Structure
 
 ```
