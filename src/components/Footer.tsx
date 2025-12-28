@@ -1,8 +1,41 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import Logo from "./Logo";
+import emailjs from "@emailjs/browser";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email) return;
+
+        setStatus("loading");
+
+        try {
+            await emailjs.send(
+                "service_a49zxpl",
+                "template_k3zkegw",
+                {
+                    subscriber_email: email,
+                    subscription_date: new Date().toLocaleString(),
+                },
+                "eqksO_UByYnBbWaPv"
+            );
+
+            setStatus("success");
+            setEmail("");
+            setTimeout(() => setStatus("idle"), 3000);
+        } catch (error) {
+            console.error("EmailJS error:", error);
+            setStatus("error");
+            setTimeout(() => setStatus("idle"), 3000);
+        }
+    };
 
     return (
         <footer className="border-t border-border bg-surface">
@@ -24,16 +57,28 @@ export default function Footer() {
                             monetization, and ethical design patterns.
                         </p>
                         {/* Mini Newsletter */}
-                        <div className="flex gap-2 max-w-sm">
+                        <form onSubmit={handleSubscribe} className="flex gap-2 max-w-sm">
                             <input
                                 type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 placeholder="your@email.com"
+                                required
                                 className="flex-1 px-4 py-2 rounded-lg bg-surface-secondary border border-border text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none transition-colors"
                             />
-                            <button className="px-4 py-2 rounded-lg gradient-accent text-background font-medium text-sm hover:opacity-90 transition-opacity">
-                                Subscribe
+                            <button
+                                type="submit"
+                                disabled={status === "loading"}
+                                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${status === "success"
+                                        ? "bg-green-500 text-white"
+                                        : status === "error"
+                                            ? "bg-red-500 text-white"
+                                            : "gradient-accent text-background hover:opacity-90"
+                                    } disabled:opacity-50`}
+                            >
+                                {status === "loading" ? "..." : status === "success" ? "✓" : status === "error" ? "!" : "Subscribe"}
                             </button>
-                        </div>
+                        </form>
                     </div>
 
                     {/* Links */}

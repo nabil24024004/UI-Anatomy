@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function NewsletterCTA() {
     const [email, setEmail] = useState("");
@@ -15,24 +16,23 @@ export default function NewsletterCTA() {
         setStatus("loading");
 
         try {
-            const res = await fetch("/api/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-            });
+            await emailjs.send(
+                "service_a49zxpl",  // Service ID
+                "template_k3zkegw", // Template ID
+                {
+                    subscriber_email: email,
+                    subscription_date: new Date().toLocaleString(),
+                },
+                "eqksO_UByYnBbWaPv" // Public Key
+            );
 
-            if (res.ok) {
-                setStatus("success");
-                setMessage("Thanks for subscribing! Check your inbox.");
-                setEmail("");
-            } else {
-                const data = await res.json();
-                setStatus("error");
-                setMessage(data.error || "Something went wrong. Please try again.");
-            }
-        } catch {
+            setStatus("success");
+            setMessage("Thanks for subscribing! Check your inbox.");
+            setEmail("");
+        } catch (error) {
+            console.error("EmailJS error:", error);
             setStatus("error");
-            setMessage("Network error. Please try again.");
+            setMessage("Something went wrong. Please try again.");
         }
     };
 
