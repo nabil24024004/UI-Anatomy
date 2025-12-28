@@ -18,13 +18,13 @@ export default function Footer() {
 
         try {
             await emailjs.send(
-                "service_a49zxpl",
-                "template_k3zkegw",
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
                 {
                     subscriber_email: email,
                     subscription_date: new Date().toLocaleString(),
                 },
-                "eqksO_UByYnBbWaPv"
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
             );
 
             setStatus("success");
@@ -70,10 +70,10 @@ export default function Footer() {
                                 type="submit"
                                 disabled={status === "loading"}
                                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${status === "success"
-                                        ? "bg-green-500 text-white"
-                                        : status === "error"
-                                            ? "bg-red-500 text-white"
-                                            : "gradient-accent text-background hover:opacity-90"
+                                    ? "bg-green-500 text-white"
+                                    : status === "error"
+                                        ? "bg-red-500 text-white"
+                                        : "gradient-accent text-background hover:opacity-90"
                                     } disabled:opacity-50`}
                             >
                                 {status === "loading" ? "..." : status === "success" ? "✓" : status === "error" ? "!" : "Subscribe"}

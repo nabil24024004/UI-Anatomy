@@ -17,13 +17,13 @@ export default function NewsletterCTA() {
 
         try {
             await emailjs.send(
-                "service_a49zxpl",  // Service ID
-                "template_k3zkegw", // Template ID
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
                 {
                     subscriber_email: email,
                     subscription_date: new Date().toLocaleString(),
                 },
-                "eqksO_UByYnBbWaPv" // Public Key
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
             );
 
             setStatus("success");
